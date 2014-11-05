@@ -38,15 +38,13 @@ class DeezerAPI
     {
         $defaults = array(
             'title' =>  '',
+            'access_token' => $this->accessToken
         );
 
         $data = array_merge($defaults, (array) $data);
         $data = json_encode($data);
 
-        $response = $this->request->api('POST', '/user/me/playlists', $data, array(
-            'Authorization' => 'Bearer ' . $this->accessToken,
-            'Content-Type' => 'application/json'
-        ));
+        $response = $this->request->api('POST', '/user/me/playlists', $data);
 
         return $response['body'];
     }
