@@ -29,21 +29,24 @@ class DeezerAPI
      * Requires a valid access token.
      * http://developers.deezer.com/api/user/playlists
      *
-     * @param array|object $data Data for the new playlist.
+     * @param array|object $options Data for the new playlist.
      * - title string Required. Name of the playlist.
      *
      * @return object
      */
-    public function createUserPlaylist($data)
+    public function createUserPlaylist($options)
     {
         $defaults = array(
-            'title' =>  '',
-            'access_token' => $this->accessToken
+            'title' =>  ''
         );
 
-        $data = array_merge($defaults, (array) $data);
+        $options = array_merge($defaults, (array) $options);
+        $options = array_filter($options);
+        $options =  array_merge($options, array(
+            'access_token' => $this->accessToken,
+        ));
 
-        $response = $this->request->api('/user/me/playlists', $data);
+        $response = $this->request->api('/user/me/playlists', $options);
 
         return $response['body'];
     }
