@@ -43,8 +43,8 @@ class DeezerAPI
         	);
 
         $response = $this->request->api('/user/me/playlists', $options);
-
-        return $response['status'] == 201;
+		
+		return $response['body'];
     }
 
     /**
@@ -69,6 +69,29 @@ class DeezerAPI
             'access_token' 		=> $this->accessToken,
             'request_method' 	=> 'post'
         ));
+
+        $response = $this->request->api('/user/me/playlists', $options);
+
+        return $response['body'];
+    }
+
+    /**
+     * Delete tracks from a playlist
+     * Requires a valid access token.
+     * http://developers.deezer.com/api/playlist/tracks
+     *
+     * @param string|array ID of the track(s) to delete.
+     *
+     * @return bool
+     */
+    public function deletePlaylistTracks($playlistId, $tracks)
+    {
+        $tracks = (array) $tracks;
+        $options = array(
+        	'access_token' 		=> $this->accessToken,
+        	'request_method' 	=> 'delete',
+        	'songs' 			=> implode(',', $tracks)
+        	);
 
         $response = $this->request->api('/user/me/playlists', $options);
 
