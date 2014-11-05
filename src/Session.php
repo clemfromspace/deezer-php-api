@@ -61,7 +61,7 @@ class Session
             'show_dialog' => $options['show_dialog'] ? 'true' : 'false',
         );
 
-        return Request::ACCOUNT_URL . '/oauth/auth.php' . http_build_query($parameters);
+        return Request::ACCOUNT_URL . '/oauth/auth.php?' . http_build_query($parameters);
     }
 
     /**

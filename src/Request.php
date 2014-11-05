@@ -62,8 +62,9 @@ class Request
 
                 break;
             case 'POST':
-                $options[CURLOPT_POST] = true;
-                $options[CURLOPT_POSTFIELDS] = $parameters;
+                if ($parameters) {
+                    $url .= '/?' . $parameters . '&request_method=POST';
+                }
 
                 break;
             case 'PUT':
