@@ -38,7 +38,7 @@ class DeezerAPI
         $tracks = (array) $tracks;
         $options = array(
         	'access_token' 		=> $this->accessToken,
-        	'request_method' 	=> 'post'
+        	'request_method' 	=> 'post',
         	'songs' 			=> implode(',', $tracks)
         	);
 
