@@ -56,14 +56,14 @@ class DeezerAPI
      * http://developers.deezer.com/api/search
      *
      * @param string $query The term to search for.
-     * @param string|array $type The type of item to search for; "album", "artist", or "track".
      * @param array|object $options Optional. Options for the search.
+     * @param string $type The type of item to search for; "album", "artist", or "track".
      * - string strict Optional. Disable the fuzzy mode (on/off)
      * - string order Optional. (RANKING, TRACK_ASC, TRACK_DESC, ARTIST_ASC, ARTIST_DESC, ALBUM_ASC, ALBUM_DESC, RATING_ASC, RATING_DESC, DURATION_ASC, DURATION_DESC)
      *
      * @return array
      */
-    public function search($query, $type = false, $options = array())
+    public function search($query, $options = array(), $type = false)
     {
         $defaults = array(
             'strict' => 'off',
@@ -78,7 +78,7 @@ class DeezerAPI
             'q' => $query,
         ));
 
-        $response = $this->request->api('GET', '/search' . $type? $type . '/' : '', $options);
+        $response = $this->request->api('GET', '/search' . ($type? '/'. $type : ''), $options);
 
         return $response['body'];
     }
