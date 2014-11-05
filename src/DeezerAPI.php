@@ -78,7 +78,7 @@ class DeezerAPI
             'q' => $query,
         ));
 
-        $response = $this->request->api('GET', '/search' . $type? $type . '/' : '', $options, $headers);
+        $response = $this->request->api('GET', '/search' . $type? $type . '/' : '', $options);
 
         return $response['body'];
     }
