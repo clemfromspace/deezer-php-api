@@ -35,7 +35,7 @@ class DeezerAPI
      */
     public function addUserPlaylistTracks($playlistId, $tracks)
     {
-        $tracks = (array) $tracks);
+        $tracks = (array) $tracks;
         $options = array(
         	'access_token' 		=> $this->accessToken,
         	'request_method' 	=> 'post'
