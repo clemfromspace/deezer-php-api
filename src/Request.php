@@ -18,9 +18,9 @@ class Request
      *
      * @return array
      */
-    public function api($method, $uri, $parameters = array(), $headers = array())
+    public function api($uri, $parameters = array(), $headers = array())
     {
-        return $this->send($method, self::API_URL . $uri, $parameters, $headers);
+        return $this->send(self::API_URL . $uri, $parameters, $headers);
     }
 
     /**
@@ -34,7 +34,7 @@ class Request
      *
      * @return array
      */
-    public function send($method, $url, $parameters = array(), $headers = array())
+    public function send($url, $parameters = array(), $headers = array())
     {
         // Sometimes a JSON object is passed
         if (is_array($parameters) || is_object($parameters)) {
@@ -53,33 +53,10 @@ class Request
         );
 
         $url = rtrim($url, '/');
-        $method = strtoupper($method);
+        $options[CURLOPT_CUSTOMREQUEST] = 'GET';
 
-        switch ($method) {
-            case 'DELETE':
-                $options[CURLOPT_CUSTOMREQUEST] = $method;
-                $options[CURLOPT_POSTFIELDS] = $parameters;
-
-                break;
-            case 'POST':
-                if ($parameters) {
-                    $url .= '/?' . $parameters . '&request_method=POST';
-                }
-
-                break;
-            case 'PUT':
-                $options[CURLOPT_CUSTOMREQUEST] = 'PUT';
-                $options[CURLOPT_POSTFIELDS] = $parameters;
-
-                break;
-            default:
-                $options[CURLOPT_CUSTOMREQUEST] = $method;
-
-                if ($parameters) {
-                    $url .= '/?' . $parameters;
-                }
-
-                break;
+        if ($parameters) {
+            $url .= '/?' . $parameters;
         }
 
         $options[CURLOPT_URL] = $url;

@@ -142,7 +142,7 @@ class Session
             'Authorization' => 'Basic ' . $payload
         );
 
-        $response = $this->request->account('POST', '/api/token', $parameters, $headers);
+        $response = $this->request->account('/api/token', $parameters, $headers);
         $response = $response['body'];
 
         if (isset($response->access_token)) {
@@ -175,7 +175,7 @@ class Session
             'Authorization' => 'Basic ' . $payload
         );
 
-        $response = $this->request->account('POST', '/api/token', $parameters, $headers);
+        $response = $this->request->account('/api/token', $parameters, $headers);
         $response = $response['body'];
 
         if (isset($response->access_token)) {
@@ -205,7 +205,7 @@ class Session
             'redirect_uri' => $this->getRedirectUri()
         );
 
-        $response = $this->request->account('POST', '/api/token', $parameters);
+        $response = $this->request->account('/api/token', $parameters);
         $response = $response['body'];
 
         if (isset($response->access_token)) {

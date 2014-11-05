@@ -43,7 +43,7 @@ class DeezerAPI
 
         $data = array_merge($defaults, (array) $data);
 
-        $response = $this->request->api('POST', '/user/me/playlists', $data);
+        $response = $this->request->api('/user/me/playlists', $data);
 
         return $response['body'];
     }
@@ -75,7 +75,7 @@ class DeezerAPI
             'q' => $query,
         ));
 
-        $response = $this->request->api('GET', '/search' . ($type? '/'. $type : ''), $options);
+        $response = $this->request->api('/search' . ($type? '/'. $type : ''), $options);
 
         return $response['body'];
     }
