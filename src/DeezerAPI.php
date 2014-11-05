@@ -42,7 +42,6 @@ class DeezerAPI
         );
 
         $data = array_merge($defaults, (array) $data);
-        $data = json_encode($data);
 
         $response = $this->request->api('POST', '/user/me/playlists', $data);
 
