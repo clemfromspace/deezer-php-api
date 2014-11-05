@@ -47,7 +47,7 @@ class DeezerAPI
         $options = array_merge($defaults, (array) $options);
         $options = array_filter($options);
         $options =  array_merge($options, array(
-            'query' => $query,
+            'q' => $query,
         ));
 
         $headers = array();

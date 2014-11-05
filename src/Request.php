@@ -5,6 +5,7 @@ class Request
 {
     private $returnAssoc = false;
 
+    const ACCOUNT_URL = 'https://connect.deezer.com';
     const API_URL = 'http://api.deezer.com';
 
     /**
