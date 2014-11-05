@@ -55,7 +55,7 @@ class DeezerAPI
      * @param array|object $options Data for the new playlist.
      * - title string Required. Name of the playlist.
      *
-     * @return object
+     * @return id The id of the new playlist
      */
     public function createUserPlaylist($options)
     {
