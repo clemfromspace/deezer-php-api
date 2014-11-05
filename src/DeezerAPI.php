@@ -82,4 +82,16 @@ class DeezerAPI
 
         return $response['body'];
     }
+
+    /**
+     * Set the access token to use.
+     *
+     * @param string $accessToken The access token.
+     *
+     * @return void
+     */
+    public function setAccessToken($accessToken)
+    {
+        $this->accessToken = $accessToken;
+    }
 }
