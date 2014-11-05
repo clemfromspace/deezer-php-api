@@ -23,6 +23,29 @@ class DeezerAPI
         $this->request = $request;
     }
 
+    /**
+     * Add track(s) to a user's playlist.
+     * Requires a valid access token.
+     * https://developer.spotify.com/web-api/add-tracks-to-playlist/
+     *
+     * @param string $playlistId ID of the playlist to add tracks to.
+     * @param string|array $tracks ID of the track(s) to add.
+     *
+     * @return bool
+     */
+    public function addUserPlaylistTracks($playlistId, $tracks)
+    {
+        $tracks = (array) $tracks);
+        $options = array(
+        	'access_token' 		=> $this->accessToken,
+        	'request_method' 	=> 'post'
+        	'songs' 			=> implode(',', $tracks)
+        	);
+
+        $response = $this->request->api('/user/me/playlists', $options);
+
+        return $response['status'] == 201;
+    }
 
     /**
      * Create a new playlist for the current user.
@@ -43,7 +66,8 @@ class DeezerAPI
         $options = array_merge($defaults, (array) $options);
         $options = array_filter($options);
         $options =  array_merge($options, array(
-            'access_token' => $this->accessToken,
+            'access_token' 		=> $this->accessToken,
+            'request_method' 	=> 'post'
         ));
 
         $response = $this->request->api('/user/me/playlists', $options);
