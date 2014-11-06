@@ -82,13 +82,11 @@ class Request
             if (isset($error->message) && isset($error->code) && isset($error->type)) {
                 $exception = 'DeezerAPI\Exception\\'.$error->type;
                 throw new $exception($error->message, $error->code);
-            } elseif (isset($body->message) && isset($error->code)) {
-                throw new DeezerAPIException($body->message, $error->code);
-            } elseif (isset($body->message)) {
-                throw new DeezerAPIException($error->message);
+            } elseif (isset($error->message) && isset($error->code)) {
+                throw new Exception\DeezerAPIException($body->message, $error->code);
+            } elseif (isset($error->message)) {
+                throw new Exception\DeezerAPIException($error->message);
             }
-        } else {
-            throw new DeezerAPIException('No \'error\' provided in response body', $status);
         }
 
         return array(
