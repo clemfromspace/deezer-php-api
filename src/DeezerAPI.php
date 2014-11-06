@@ -120,7 +120,7 @@ class DeezerAPI
         $options = array_merge($defaults, (array) $options);
         $options = array_filter($options);
         $options =  array_merge($options, array(
-            'qs' => $query,
+            'q' => $query,
         ));
 
         $response = $this->request->api('GET', '/search' . ($type? '/'. $type : ''), $options);
