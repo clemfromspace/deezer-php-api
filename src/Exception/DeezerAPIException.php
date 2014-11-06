@@ -1,5 +1,5 @@
 <?php
-namespace DeezerAPI;
+namespace DeezerAPI\Exception;
 
 class DeezerAPIException extends \Exception
 {
