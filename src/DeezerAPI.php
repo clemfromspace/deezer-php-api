@@ -99,6 +99,20 @@ class DeezerAPI
     }
 
     /**
+     * Get a playlist
+     * http://developers.deezer.com/api/playlist#infos
+     *
+     * @param integer the id of the playlist.
+     *
+     * @return array
+     */
+    public function getPlaylist($playlistId)
+    {
+        $response = $this->request->api('/playlist/' . $playlistId);
+        return $response['body'];
+    }
+
+    /**
      * Search for an item.
      * http://developers.deezer.com/api/search
      *
