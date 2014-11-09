@@ -106,7 +106,7 @@ class DeezerAPI
      */
     public function getPlaylist($playlistId)
     {
-        $response = $this->request->api('/playlist/' . $playlistId);
+        $response = $this->request->api('GET', '/playlist/' . $playlistId);
         return $response['body'];
     }
 
