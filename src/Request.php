@@ -18,9 +18,9 @@ class Request
      *
      * @return array
      */
-    public function api($uri, $parameters = array(), $headers = array())
+    public function api($type, $uri, $parameters = array(), $headers = array())
     {
-        return $this->send(self::API_URL . $uri, $parameters, $headers);
+        return $this->send($type, self::API_URL . $uri, $parameters, $headers);
     }
 
     /**
@@ -34,26 +34,29 @@ class Request
      *
      * @return array
      */
-    public function send($url, $parameters = array(), $headers = array())
+    public function send($type, $url, $parameters = array(), $headers = array())
     {
-        // Sometimes a JSON object is passed
-        if (is_array($parameters) || is_object($parameters)) {
-            $parameters = http_build_query($parameters);
-        }
-
-        $mergedHeaders = array();
-        foreach ($headers as $key => $val) {
-            $mergedHeaders[] = "$key: $val";
-        }
 
         $options = array(
             CURLOPT_HEADER => true,
-            CURLOPT_HTTPHEADER => $mergedHeaders,
             CURLOPT_RETURNTRANSFER => true
         );
 
         $url = rtrim($url, '/');
         $options[CURLOPT_CUSTOMREQUEST] = 'GET';
+
+        switch($type) {
+            case 'POST':
+                $parameters['request_method'] = 'post';
+                break;
+            case 'DELETE':
+                $parameters['request_method'] = 'delete';
+                break;
+            default:
+                break;
+        }
+
+        $parameters = http_build_query($parameters);
 
         if ($parameters) {
             $url .= '/?' . $parameters;
@@ -72,31 +75,17 @@ class Request
 
         $body = json_decode($body, $this->returnAssoc);
 
-        if ($status < 200 || $status > 299) {
-            if (!$this->returnAssoc && isset($body->error)) {
-                $error = $body->error;
+        if (isset($body->error)) {
+            $error = $body->error;
 
-                // These properties only exist on API calls, not auth calls
-                if (isset($error->message) && isset($error->status)) {
-                    throw new DeezerAPIException($error->message, $error->status);
-                } elseif (isset($body->error_description)) {
-                    throw new DeezerAPIException($body->error_description, $status);
-                } else {
-                    throw new DeezerAPIException($error, $status);
-                }
-            } elseif ($this->returnAssoc && isset($body['error'])) {
-                $error = $body['error'];
-
-                // These properties only exist on API calls, not auth calls
-                if (isset($error['message']) && isset($error['status'])) {
-                    throw new DeezerAPIException($error['message'], $error['status']);
-                } elseif (isset($body['error_description'])) {
-                    throw new DeezerAPIException($body['error_description'], $status);
-                } else {
-                    throw new DeezerAPIException($error, $status);
-                }
-            } else {
-                throw new DeezerAPIException('No \'error\' provided in response body', $status);
+            // These properties only exist on API calls, not auth calls
+            if (isset($error->message) && isset($error->code) && isset($error->type)) {
+                $exception = 'DeezerAPI\Exception\\'.$error->type;
+                throw new $exception($error->message, $error->code);
+            } elseif (isset($error->message) && isset($error->code)) {
+                throw new Exception\DeezerAPIException($body->message, $error->code);
+            } elseif (isset($error->message)) {
+                throw new Exception\DeezerAPIException($error->message);
             }
         }
 

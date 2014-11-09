@@ -38,11 +38,10 @@ class DeezerAPI
         $tracks = (array) $tracks;
         $options = array(
         	'access_token' 		=> $this->accessToken,
-        	'request_method' 	=> 'post',
         	'songs' 			=> implode(',', $tracks)
         	);
 
-        $response = $this->request->api('/user/me/playlists', $options);
+        $response = $this->request->api('POST', '/user/me/playlists', $options);
 		
 		return $response['body'];
     }
@@ -66,11 +65,10 @@ class DeezerAPI
         $options = array_merge($defaults, (array) $options);
         $options = array_filter($options);
         $options =  array_merge($options, array(
-            'access_token' 		=> $this->accessToken,
-            'request_method' 	=> 'post'
+            'access_token' 		=> $this->accessToken
         ));
 
-        $response = $this->request->api('/user/me/playlists', $options);
+        $response = $this->request->api('POST', '/user/me/playlists', $options);
 
         return $response['body'];
     }
@@ -93,7 +91,7 @@ class DeezerAPI
         	'songs' 			=> implode(',', $tracks)
         	);
 
-        $response = $this->request->api('/user/me/playlists', $options);
+        $response = $this->request->api('DELETE', '/user/me/playlists', $options);
 
         return $response['body'];
     }
@@ -139,7 +137,7 @@ class DeezerAPI
             'q' => $query,
         ));
 
-        $response = $this->request->api('/search' . ($type? '/'. $type : ''), $options);
+        $response = $this->request->api('GET', '/search' . ($type? '/'. $type : ''), $options);
 
         return $response['body'];
     }
