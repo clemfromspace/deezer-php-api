@@ -41,7 +41,7 @@ class DeezerAPI
         	'songs' 			=> implode(',', $tracks)
         	);
 
-        $response = $this->request->api('POST', '/user/me/playlists', $options);
+        $response = $this->request->api('POST', '/playlist/' . $playlistId .'/tracks', $options);
 		
 		return $response['body'];
     }
