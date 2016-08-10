@@ -115,7 +115,7 @@ class DeezerAPI
      * 
      * @return array
      */
-    public function getPlaylists()
+    public function getUserPlaylists()
     {
          $options = array(
              'access_token' 		=> $this->accessToken,
