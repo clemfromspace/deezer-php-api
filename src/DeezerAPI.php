@@ -111,6 +111,21 @@ class DeezerAPI
     }
 
     /**
+     * Get all playlists for the authenticated user
+     * 
+     * @return array
+     */
+    public function getUserPlaylists()
+    {
+         $options = array(
+             'access_token' 		=> $this->accessToken,
+         );
+
+         $response = $this->request->api('GET', '/user/me/playlists', $options);
+         return $response['body'];
+    }
+
+    /**
      * Search for an item.
      * http://developers.deezer.com/api/search
      *
