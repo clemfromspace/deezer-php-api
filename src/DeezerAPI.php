@@ -111,6 +111,18 @@ class DeezerAPI
     }
 
     /**
+     * Get a single track
+     * 
+     * @param integer $trackId
+     * @return array
+     */
+    public function getTrack($trackId)
+    {
+        $response = $this->request->api('GET', '/track/' . $trackId);
+        return $response['body'];
+    }
+    
+    /**
      * Get all playlists for the authenticated user
      * 
      * @return array
