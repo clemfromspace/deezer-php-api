@@ -121,6 +121,18 @@ class DeezerAPI
         $response = $this->request->api('GET', '/track/' . $trackId);
         return $response['body'];
     }
+
+    /**
+     * Get a single album
+     * 
+     * @param integer $albumId
+     * @return array
+     */
+    public function getAlbum($albumId)
+    {
+        $response = $this->request->api('GET', '/album/' . $albumId);
+        return $response['body'];
+    }
     
     /**
      * Get all playlists for the authenticated user
